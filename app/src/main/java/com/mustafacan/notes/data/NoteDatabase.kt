@@ -8,4 +8,8 @@ import com.mustafacan.notes.domain.model.Note
 abstract class NoteDatabase: RoomDatabase() {
 
     abstract fun noteDao(): NoteDao
+
+    companion object {
+        const val DATABASE_NAME = "note_db"
+    }
 }

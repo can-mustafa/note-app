@@ -10,3 +10,5 @@ data class Note(
     val content: String,
     val timestamp: Long
 )
+
+class InvalidNoteException(message: String) : Exception(message)

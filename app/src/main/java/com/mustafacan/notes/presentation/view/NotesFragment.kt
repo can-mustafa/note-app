@@ -5,9 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.mustafacan.notes.databinding.FragmentNoteListBinding
 
-class NoteListFragment : Fragment() {
+class NotesFragment : Fragment() {
 
     private var _binding: FragmentNoteListBinding? = null
     private val binding get() = _binding!!
@@ -24,7 +25,9 @@ class NoteListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
+        binding.addFab.setOnClickListener {
+            findNavController().navigate(NotesFragmentDirections.actionNoteListFragmentToNoteDetailFragment())
+        }
     }
 
     override fun onDestroyView() {
@@ -35,7 +38,7 @@ class NoteListFragment : Fragment() {
     companion object {
 
         fun newInstance() =
-            NoteListFragment().apply {
+            NotesFragment().apply {
 
             }
     }
