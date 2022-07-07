@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Notes</string>
+    <string name="fab_content_description">Add Note Fab</string>
+</resources>
