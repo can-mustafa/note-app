@@ -9,14 +9,22 @@
         android:id="@+id/noteListFragment"
         android:name="com.mustafacan.notes.presentation.view.NotesFragment"
         android:label="fragment_note_list"
-        tools:layout="@layout/fragment_note_list" >
+        tools:layout="@layout/fragment_notes">
         <action
             android:id="@+id/action_noteListFragment_to_noteDetailFragment"
             app:destination="@id/noteDetailFragment" />
+        <action
+            android:id="@+id/action_noteListFragment_to_noteAddEditFragment"
+            app:destination="@id/noteAddEditFragment" />
     </fragment>
     <fragment
         android:id="@+id/noteDetailFragment"
         android:name="com.mustafacan.notes.presentation.view.NoteDetailFragment"
         android:label="fragment_note_detail"
         tools:layout="@layout/fragment_note_detail" />
+    <fragment
+        android:id="@+id/noteAddEditFragment"
+        android:name="com.mustafacan.notes.presentation.view.NoteAddEditFragment"
+        android:label="fragment_note_add_edit"
+        tools:layout="@layout/fragment_note_add_edit" />
 </navigation>
