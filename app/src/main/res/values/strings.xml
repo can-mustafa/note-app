@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">Notes</string>
     <string name="fab_content_description">Add Note Fab</string>
+    <string name="imageview_content_description">Toggle Radio Group</string>
+    <string name="title">Title</string>
+    <string name="date">Date</string>
+    <string name="ascending">Ascending</string>
+    <string name="descending">Descending</string>
+    <string name="personal_notes">Personal Notes</string>
 </resources>

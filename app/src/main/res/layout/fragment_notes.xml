@@ -11,19 +11,34 @@
         android:id="@+id/order_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/gray"
+        android:background="@color/white"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/label_personal_notes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_6"
+            android:layout_marginTop="@dimen/dp_2"
+            android:gravity="center_vertical"
+            android:text="@string/personal_notes"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </TextView>
 
         <LinearLayout
             android:id="@+id/order_radio_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:visibility="visible"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@id/label_personal_notes">
 
             <RadioGroup
                 android:layout_width="wrap_content"
@@ -34,13 +49,16 @@
                     android:id="@+id/order_by_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Title" />
+                    android:text="@string/title"
+                    android:textColor="@color/text_gray" />
 
                 <RadioButton
                     android:id="@+id/order_by_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Date" />
+                    android:checked="true"
+                    android:text="@string/date"
+                    android:textColor="@color/text_gray" />
 
             </RadioGroup>
 
@@ -53,26 +71,32 @@
                     android:id="@+id/order_ascending"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Ascending" />
+                    android:text="@string/ascending"
+                    android:textColor="@color/text_gray" />
 
                 <RadioButton
                     android:id="@+id/order_descending"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Descending" />
+                    android:checked="true"
+                    android:text="@string/descending"
+                    android:textColor="@color/text_gray" />
 
             </RadioGroup>
 
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/sort_view"
+            android:id="@+id/toggle_sort_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
+            android:layout_marginEnd="@dimen/dp_6"
+            android:contentDescription="@string/imageview_content_description"
             android:src="@drawable/ic_baseline_sort_24"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView

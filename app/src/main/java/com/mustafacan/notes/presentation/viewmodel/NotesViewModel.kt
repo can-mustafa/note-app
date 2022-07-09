@@ -21,16 +21,16 @@ class NotesViewModel @Inject constructor(
     private val noteUseCases: NoteUseCases
 ) : ViewModel() {
 
-    private val _getNoteSharedFlow = MutableSharedFlow<List<Note>>()
-    val getNoteSharedFlow: SharedFlow<List<Note>> get() = _getNoteSharedFlow
+    private val _getNotesSharedFlow = MutableSharedFlow<List<Note>>()
+    val getNotesSharedFlow: SharedFlow<List<Note>> get() = _getNotesSharedFlow
 
     private val _addNoteSharedFlow = MutableSharedFlow<Resource<Note>>()
     val addNoteSharedFlow: SharedFlow<Resource<Note>> get() = _addNoteSharedFlow
 
-    private var recentlyDeletedNote: Note? = null
+    private val _getNoteLiveData = MutableLiveData<Note>()
+    val getNoteLiveData: LiveData<Note> get() = _getNoteLiveData
 
-    private val _undoDeletedNoteLiveData = MutableLiveData<Unit>()
-    val undoDeletedNoteLiveData: LiveData<Unit> = _undoDeletedNoteLiveData
+    private var recentlyDeletedNote: Note? = null
 
     fun addNote(note: Note) {
         viewModelScope.launch {
@@ -47,20 +47,19 @@ class NotesViewModel @Inject constructor(
         viewModelScope.launch {
             noteUseCases.deleteNote(note)
             recentlyDeletedNote = note
-            _undoDeletedNoteLiveData.value = Unit
         }
     }
 
     fun getNoteById(id: Int) {
         viewModelScope.launch {
-            noteUseCases.getNote(id)
+            _getNoteLiveData.value = noteUseCases.getNote(id)
         }
     }
 
     fun getNotes(noteOrder: NoteOrder = NoteOrder.Date(OrderType.Descending)) {
         viewModelScope.launch {
             noteUseCases.getNotes(noteOrder).collectIndexed { _, value ->
-                _getNoteSharedFlow.emit(value)
+                _getNotesSharedFlow.emit(value)
             }
         }
     }

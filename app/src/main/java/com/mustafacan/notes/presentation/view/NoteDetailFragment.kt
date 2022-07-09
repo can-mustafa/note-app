@@ -4,17 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.navArgs
 import com.mustafacan.notes.databinding.FragmentNoteDetailBinding
 import com.mustafacan.notes.domain.model.Note
-import com.mustafacan.notes.presentation.util.Status
 import com.mustafacan.notes.presentation.viewmodel.NotesViewModel
-import kotlinx.coroutines.flow.collectIndexed
-import kotlinx.coroutines.launch
-
+import java.text.SimpleDateFormat
 
 class NoteDetailFragment : Fragment() {
 
@@ -23,10 +19,12 @@ class NoteDetailFragment : Fragment() {
 
     lateinit var viewModel: NotesViewModel
 
+    private val args: NoteDetailFragmentArgs by navArgs()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentNoteDetailBinding.inflate(layoutInflater, container, false)
+        _binding = FragmentNoteDetailBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -34,45 +32,29 @@ class NoteDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = ViewModelProvider(requireActivity())[NotesViewModel::class.java]
-
+        val noteId = args.noteId
+        viewModel.getNoteById(noteId)
         setObservers()
-
-        binding.addNote.setOnClickListener {
-            viewModel.addNote(
-                Note(
-                    binding.title.text.toString(),
-                    binding.content.text.toString(),
-                    System.currentTimeMillis()
-                )
-            )
-        }
-    }
-
-    private fun setObservers() {
-        lifecycleScope.launch {
-            viewModel.addNoteSharedFlow.collectIndexed { _, value ->
-                when (value.status) {
-                    Status.SUCCESS -> {
-                        Toast.makeText(
-                            requireContext(),
-                            "Note added successfully.",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
-                    Status.ERROR -> {
-                        Toast.makeText(
-                            requireContext(), value.message ?: "Error", Toast.LENGTH_LONG
-                        ).show()
-                    }
-                    Status.LOADING -> {}
-                }
-            }
-        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun setObservers() {
+        viewModel.getNoteLiveData.observe(viewLifecycleOwner) {
+            bindData(it)
+        }
+    }
+
+    private fun bindData(note: Note) {
+        binding.noteDetailTitle.text = note.title
+        binding.noteDetailContent.text = note.content
+
+        val simpleDateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm")
+        val dateString = simpleDateFormat.format(note.timestamp)
+        binding.noteDetailTimestamp.text = dateString
     }
 
     companion object {

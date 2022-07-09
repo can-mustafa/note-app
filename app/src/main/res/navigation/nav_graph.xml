@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/noteListFragment">
+    app:startDestination="@id/notesFragment">
 
     <fragment
-        android:id="@+id/noteListFragment"
+        android:id="@+id/notesFragment"
         android:name="com.mustafacan.notes.presentation.view.NotesFragment"
         android:label="fragment_note_list"
         tools:layout="@layout/fragment_notes">
@@ -21,7 +21,12 @@
         android:id="@+id/noteDetailFragment"
         android:name="com.mustafacan.notes.presentation.view.NoteDetailFragment"
         android:label="fragment_note_detail"
-        tools:layout="@layout/fragment_note_detail" />
+        tools:layout="@layout/fragment_note_detail">
+        <argument
+            android:name="note_id"
+            android:defaultValue="-1"
+            app:argType="integer" />
+    </fragment>
     <fragment
         android:id="@+id/noteAddEditFragment"
         android:name="com.mustafacan.notes.presentation.view.NoteAddEditFragment"

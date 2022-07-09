@@ -44,8 +44,6 @@ class NotesFragment : Fragment(), OnItemClickListener {
         viewModel = ViewModelProvider(requireActivity())[NotesViewModel::class.java]
         noteAdapter = NotesRecyclerViewAdapter(this)
         viewModel.getNotes()
-        binding.orderByDate.isChecked = true
-        binding.orderDescending.isChecked = true
 
         setListeners()
         setObservers()
@@ -57,16 +55,24 @@ class NotesFragment : Fragment(), OnItemClickListener {
     }
 
     override fun onItemClick(note: Note) {
-        findNavController().navigate(NotesFragmentDirections.actionNoteListFragmentToNoteDetailFragment())
+        findNavController().navigate(
+            NotesFragmentDirections.actionNoteListFragmentToNoteDetailFragment(
+                note.id ?: 0
+            )
+        )
     }
 
     override fun onRemoveClick(note: Note) {
         viewModel.deleteNote(note)
+        Snackbar.make(requireView(), "Note deleted.", Snackbar.LENGTH_LONG)
+            .setAction("Undo") {
+                viewModel.restoreNote()
+            }.show()
     }
 
     private fun setListeners() {
 
-        binding.sortView.setOnClickListener {
+        binding.toggleSortView.setOnClickListener {
             with(binding.orderRadioGroup) {
                 this.visibility = if (this.isVisible) View.GONE else View.VISIBLE
             }
@@ -88,7 +94,7 @@ class NotesFragment : Fragment(), OnItemClickListener {
         }
 
         binding.addFab.setOnClickListener {
-            findNavController().navigate(NotesFragmentDirections.actionNoteListFragmentToNoteDetailFragment())
+            findNavController().navigate(NotesFragmentDirections.actionNoteListFragmentToNoteAddEditFragment())
         }
 
         binding.orderByTitle.setOnClickListener {
@@ -123,15 +129,9 @@ class NotesFragment : Fragment(), OnItemClickListener {
 
     private fun setObservers() {
         lifecycleScope.launch {
-            viewModel.getNoteSharedFlow.collectIndexed { _, value ->
+            viewModel.getNotesSharedFlow.collectIndexed { _, value ->
                 noteAdapter.notes = value
             }
-        }
-
-        viewModel.undoDeletedNoteLiveData.observe(viewLifecycleOwner) {
-            Snackbar.make(requireView(), "Note deleted.", Snackbar.LENGTH_LONG).setAction("Undo") {
-                viewModel.restoreNote()
-            }.show()
         }
     }
 
