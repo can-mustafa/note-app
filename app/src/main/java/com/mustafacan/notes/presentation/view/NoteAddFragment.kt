@@ -8,28 +8,29 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.mustafacan.notes.databinding.FragmentNoteAddEditBinding
+import androidx.navigation.fragment.findNavController
+import com.mustafacan.notes.databinding.FragmentNoteAddBinding
 import com.mustafacan.notes.domain.model.Note
 import com.mustafacan.notes.presentation.util.Status
 import com.mustafacan.notes.presentation.viewmodel.NotesViewModel
 import kotlinx.coroutines.flow.collectIndexed
 import kotlinx.coroutines.launch
 
-class NoteAddEditFragment : Fragment() {
+class NoteAddFragment : Fragment() {
 
-    private var _binding: FragmentNoteAddEditBinding? = null
+    private var _binding: FragmentNoteAddBinding? = null
     private val binding get() = _binding!!
 
-    lateinit var viewModel: NotesViewModel
+    private lateinit var viewModel: NotesViewModel
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentNoteAddEditBinding.inflate(inflater, container, false)
+    ): View? {
+        _binding = FragmentNoteAddBinding.inflate(inflater, container, false)
         return binding.root
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -46,11 +47,11 @@ class NoteAddEditFragment : Fragment() {
     }
 
     private fun setListeners() {
-        binding.addNote.setOnClickListener {
+        binding.noteAddButton.setOnClickListener {
             viewModel.addNote(
                 Note(
-                    binding.title.text.toString(),
-                    binding.content.text.toString(),
+                    binding.noteAddTitle.text.toString(),
+                    binding.noteAddContent.text.toString(),
                     System.currentTimeMillis()
                 )
             )
@@ -64,9 +65,10 @@ class NoteAddEditFragment : Fragment() {
                     Status.SUCCESS -> {
                         Toast.makeText(
                             requireContext(),
-                            "Note added successfully.",
+                            "Note saved successfully.",
                             Toast.LENGTH_LONG
                         ).show()
+                        findNavController().popBackStack()
                     }
                     Status.ERROR -> {
                         Toast.makeText(
@@ -77,10 +79,5 @@ class NoteAddEditFragment : Fragment() {
                 }
             }
         }
-    }
-
-
-    companion object {
-        fun newInstance() = NoteAddEditFragment()
     }
 }

@@ -27,16 +27,25 @@
             android:text="@string/personal_notes"
             android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent" />
 
-        </TextView>
+        <ImageView
+            android:id="@+id/toggle_sort_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="@dimen/dp_6"
+            android:contentDescription="@string/imageview_content_description"
+            android:src="@drawable/ic_baseline_sort_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
             android:id="@+id/order_radio_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="visible"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/label_personal_notes">
 
@@ -85,17 +94,6 @@
             </RadioGroup>
 
         </LinearLayout>
-
-        <ImageView
-            android:id="@+id/toggle_sort_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginEnd="@dimen/dp_6"
-            android:contentDescription="@string/imageview_content_description"
-            android:src="@drawable/ic_baseline_sort_24"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

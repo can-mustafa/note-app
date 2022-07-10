@@ -11,25 +11,25 @@
         android:label="fragment_note_list"
         tools:layout="@layout/fragment_notes">
         <action
-            android:id="@+id/action_noteListFragment_to_noteDetailFragment"
-            app:destination="@id/noteDetailFragment" />
+            android:id="@+id/action_noteListFragment_to_noteEditFragment"
+            app:destination="@id/noteEditFragment" />
         <action
-            android:id="@+id/action_noteListFragment_to_noteAddEditFragment"
-            app:destination="@id/noteAddEditFragment" />
+            android:id="@+id/action_noteListFragment_to_noteAddFragment"
+            app:destination="@+id/noteAddFragment" />
     </fragment>
     <fragment
-        android:id="@+id/noteDetailFragment"
-        android:name="com.mustafacan.notes.presentation.view.NoteDetailFragment"
-        android:label="fragment_note_detail"
-        tools:layout="@layout/fragment_note_detail">
+        android:id="@+id/noteEditFragment"
+        android:name="com.mustafacan.notes.presentation.view.NoteEditFragment"
+        android:label="fragment_note_edit"
+        tools:layout="@layout/fragment_note_edit">
         <argument
             android:name="note_id"
             android:defaultValue="-1"
             app:argType="integer" />
     </fragment>
     <fragment
-        android:id="@+id/noteAddEditFragment"
-        android:name="com.mustafacan.notes.presentation.view.NoteAddEditFragment"
-        android:label="fragment_note_add_edit"
-        tools:layout="@layout/fragment_note_add_edit" />
+        android:id="@+id/noteAddFragment"
+        android:name="com.mustafacan.notes.presentation.view.NoteAddFragment"
+        android:label="fragment_note_add"
+        tools:layout="@layout/fragment_note_add" />
 </navigation>

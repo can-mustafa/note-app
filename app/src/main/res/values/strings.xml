@@ -7,4 +7,10 @@
     <string name="ascending">Ascending</string>
     <string name="descending">Descending</string>
     <string name="personal_notes">Personal Notes</string>
+    <string name="enter_note_title">Enter note title here</string>
+    <string name="enter_note_content">Enter note content here</string>
+    <string name="save">Save</string>
+    <string name="empty_title">Empty title…</string>
+    <string name="empty_content">Empty content…</string>
+    <string name="last_update_date">Last update: %1$s</string>
 </resources>

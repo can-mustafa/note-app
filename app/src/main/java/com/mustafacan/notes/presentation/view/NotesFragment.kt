@@ -22,7 +22,6 @@ import com.mustafacan.notes.presentation.viewmodel.NotesViewModel
 import kotlinx.coroutines.flow.collectIndexed
 import kotlinx.coroutines.launch
 
-
 class NotesFragment : Fragment(), OnItemClickListener {
 
     private var _binding: FragmentNotesBinding? = null
@@ -56,8 +55,8 @@ class NotesFragment : Fragment(), OnItemClickListener {
 
     override fun onItemClick(note: Note) {
         findNavController().navigate(
-            NotesFragmentDirections.actionNoteListFragmentToNoteDetailFragment(
-                note.id ?: 0
+            NotesFragmentDirections.actionNoteListFragmentToNoteEditFragment(
+                note.id ?: -1
             )
         )
     }
@@ -71,7 +70,6 @@ class NotesFragment : Fragment(), OnItemClickListener {
     }
 
     private fun setListeners() {
-
         binding.toggleSortView.setOnClickListener {
             with(binding.orderRadioGroup) {
                 this.visibility = if (this.isVisible) View.GONE else View.VISIBLE
@@ -94,7 +92,7 @@ class NotesFragment : Fragment(), OnItemClickListener {
         }
 
         binding.addFab.setOnClickListener {
-            findNavController().navigate(NotesFragmentDirections.actionNoteListFragmentToNoteAddEditFragment())
+            findNavController().navigate(NotesFragmentDirections.actionNoteListFragmentToNoteAddFragment())
         }
 
         binding.orderByTitle.setOnClickListener {
@@ -133,9 +131,5 @@ class NotesFragment : Fragment(), OnItemClickListener {
                 noteAdapter.notes = value
             }
         }
-    }
-
-    companion object {
-        fun newInstance() = NotesFragment()
     }
 }
