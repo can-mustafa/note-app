@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
         android:gravity="center_horizontal"
-        android:hint="@string/empty_title"
+        android:hint="@string/enter_note_title"
         android:textColor="@color/text_black"
         android:textSize="@dimen/sp_36"
         android:textStyle="bold"
@@ -42,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:hint="@string/empty_content"
+            android:hint="@string/enter_note_content"
             android:textColor="@color/text_black"
             android:textSize="@dimen/sp_28" />
 

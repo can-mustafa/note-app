@@ -27,7 +27,7 @@ class NoteAddFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentNoteAddBinding.inflate(inflater, container, false)
         return binding.root
     }
