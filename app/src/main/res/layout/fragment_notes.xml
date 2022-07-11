@@ -1,123 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/light_gray"
-    tools:context=".presentation.view.NotesFragment">
+<layout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/order_container"
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="isEmptyList"
+            type="boolean" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent"
+        tools:context=".presentation.view.NotesFragment">
 
-        <TextView
-            android:id="@+id/label_personal_notes"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/order_container"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp_6"
-            android:layout_marginTop="@dimen/dp_2"
-            android:gravity="center_vertical"
-            android:text="@string/personal_notes"
-            android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/toggle_sort_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginEnd="@dimen/dp_6"
-            android:contentDescription="@string/imageview_content_description"
-            android:src="@drawable/ic_baseline_sort_24"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:id="@+id/order_radio_group"
+            <TextView
+                android:id="@+id/label_personal_notes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_6"
+                android:layout_marginTop="@dimen/dp_2"
+                android:gravity="center"
+                android:text="@string/personal_notes"
+                android:textColor="?android:textColorPrimary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/toggle_sort_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/dp_6"
+                android:contentDescription="@string/imageview_content_description"
+                android:src="@drawable/ic_baseline_sort_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="?android:textColorPrimary" />
+
+            <LinearLayout
+                android:id="@+id/order_radio_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/label_personal_notes">
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/order_by_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/title"
+                        android:textColor="?android:textColorSecondary" />
+
+                    <RadioButton
+                        android:id="@+id/order_by_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="@string/date"
+                        android:textColor="?android:textColorSecondary" />
+
+                </RadioGroup>
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/order_ascending"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/ascending"
+                        android:textColor="?android:textColorSecondary" />
+
+                    <RadioButton
+                        android:id="@+id/order_descending"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="@string/descending"
+                        android:textColor="?android:textColorSecondary" />
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/match_constraint"
+            android:visibility="@{isEmptyList ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/order_container"
+            tools:itemCount="5"
+            tools:listitem="@layout/item_note_row" />
+
+        <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone"
+            android:drawableTop="@drawable/ic_baseline_note_add_24"
+            android:drawableTint="?android:textColorPrimary"
+            android:gravity="center"
+            android:text="@string/empty_note_list"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="@dimen/sp_24"
+            android:visibility="@{isEmptyList ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/label_personal_notes">
+            app:layout_constraintTop_toBottomOf="@id/order_container" />
 
-            <RadioGroup
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/order_by_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/title"
-                    android:textColor="@color/text_gray" />
-
-                <RadioButton
-                    android:id="@+id/order_by_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:text="@string/date"
-                    android:textColor="@color/text_gray" />
-
-            </RadioGroup>
-
-            <RadioGroup
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/order_ascending"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/ascending"
-                    android:textColor="@color/text_gray" />
-
-                <RadioButton
-                    android:id="@+id/order_descending"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:text="@string/descending"
-                    android:textColor="@color/text_gray" />
-
-            </RadioGroup>
-
-        </LinearLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_24"
+            android:layout_marginBottom="@dimen/dp_24"
+            android:contentDescription="@string/fab_content_description"
+            android:src="@drawable/ic_baseline_add_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:tint="@color/white" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/match_constraint"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/order_container"
-        tools:itemCount="5"
-        tools:listitem="@layout/item_note_row" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/dp_24"
-        android:layout_marginBottom="@dimen/dp_24"
-        android:contentDescription="@string/fab_content_description"
-        android:src="@drawable/ic_baseline_add_24"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:tint="@color/white" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

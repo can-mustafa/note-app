@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Notes</string>
+    <string name="fab_content_description">Not Ekle Fab</string>
+    <string name="imageview_content_description">Toggle Radio Group</string>
+    <string name="title">Başlık</string>
+    <string name="date">Tarih</string>
+    <string name="ascending">Artan</string>
+    <string name="descending">Azalan</string>
+    <string name="personal_notes">Kişisel Notlar</string>
+    <string name="enter_note_title">Not başlığını giriniz</string>
+    <string name="enter_note_content">Not içeriğini giriniz</string>
+    <string name="save">Kaydet</string>
+    <string name="empty_title">Boş başlık…</string>
+    <string name="empty_content">Boş içerik…</string>
+    <string name="last_update_date">Son güncelleme: %1$s</string>
+    <string name="empty_note_list">Henüz not eklenmedi</string>
+    <string name="note_deleted">Not silindi.</string>
+    <string name="undo">Geri al</string>
+    <string name="error_title_empty">Başlık boş olamaz.</string>
+    <string name="error_content_empty">İçerik boş olamaz.</string>
+</resources>

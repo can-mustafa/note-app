@@ -7,10 +7,15 @@
     <string name="ascending">Ascending</string>
     <string name="descending">Descending</string>
     <string name="personal_notes">Personal Notes</string>
-    <string name="enter_note_title">Enter note title here</string>
-    <string name="enter_note_content">Enter note content here</string>
+    <string name="enter_note_title">Enter note title</string>
+    <string name="enter_note_content">Enter note content</string>
     <string name="save">Save</string>
     <string name="empty_title">Empty title…</string>
     <string name="empty_content">Empty content…</string>
     <string name="last_update_date">Last update: %1$s</string>
+    <string name="empty_note_list">No notes added yet</string>
+    <string name="note_deleted">Note deleted.</string>
+    <string name="undo">Undo</string>
+    <string name="error_title_empty">Title can\'t be empty.</string>
+    <string name="error_content_empty">Content can\'t be empty.</string>
 </resources>

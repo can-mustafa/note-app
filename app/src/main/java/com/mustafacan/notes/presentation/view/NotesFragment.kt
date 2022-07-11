@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import com.mustafacan.notes.R
 import com.mustafacan.notes.databinding.FragmentNotesBinding
 import com.mustafacan.notes.domain.model.Note
 import com.mustafacan.notes.domain.util.NoteOrder
@@ -63,8 +64,8 @@ class NotesFragment : Fragment(), OnItemClickListener {
 
     override fun onRemoveClick(note: Note) {
         viewModel.deleteNote(note)
-        Snackbar.make(requireView(), "Note deleted.", Snackbar.LENGTH_LONG)
-            .setAction("Undo") {
+        Snackbar.make(requireView(), getString(R.string.note_deleted), Snackbar.LENGTH_LONG)
+            .setAction(getString(R.string.undo)) {
                 viewModel.restoreNote()
             }.show()
     }
@@ -128,6 +129,7 @@ class NotesFragment : Fragment(), OnItemClickListener {
     private fun setObservers() {
         lifecycleScope.launch {
             viewModel.getNotesSharedFlow.collectIndexed { _, value ->
+                _binding?.isEmptyList = value.isEmpty()
                 noteAdapter.notes = value
             }
         }
