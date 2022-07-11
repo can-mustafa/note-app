@@ -17,95 +17,60 @@
         android:layout_height="match_parent"
         tools:context=".presentation.view.NotesFragment">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/order_container"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:id="@+id/order_radio_group"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:orientation="vertical"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/label_personal_notes"
+            <RadioGroup
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_6"
-                android:layout_marginTop="@dimen/dp_2"
-                android:gravity="center"
-                android:text="@string/personal_notes"
-                android:textColor="?android:textColorPrimary"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/toggle_sort_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginEnd="@dimen/dp_6"
-                android:contentDescription="@string/imageview_content_description"
-                android:src="@drawable/ic_baseline_sort_24"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="?android:textColorPrimary" />
-
-            <LinearLayout
-                android:id="@+id/order_radio_group"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/label_personal_notes">
-
-                <RadioGroup
+                <RadioButton
+                    android:id="@+id/order_by_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:text="@string/title"
+                    android:textColor="?android:textColorSecondary" />
 
-                    <RadioButton
-                        android:id="@+id/order_by_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/title"
-                        android:textColor="?android:textColorSecondary" />
-
-                    <RadioButton
-                        android:id="@+id/order_by_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true"
-                        android:text="@string/date"
-                        android:textColor="?android:textColorSecondary" />
-
-                </RadioGroup>
-
-                <RadioGroup
+                <RadioButton
+                    android:id="@+id/order_by_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:checked="true"
+                    android:text="@string/date"
+                    android:textColor="?android:textColorSecondary" />
 
-                    <RadioButton
-                        android:id="@+id/order_ascending"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/ascending"
-                        android:textColor="?android:textColorSecondary" />
+            </RadioGroup>
 
-                    <RadioButton
-                        android:id="@+id/order_descending"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true"
-                        android:text="@string/descending"
-                        android:textColor="?android:textColorSecondary" />
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-                </RadioGroup>
+                <RadioButton
+                    android:id="@+id/order_ascending"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ascending"
+                    android:textColor="?android:textColorSecondary" />
 
-            </LinearLayout>
+                <RadioButton
+                    android:id="@+id/order_descending"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="@string/descending"
+                    android:textColor="?android:textColorSecondary" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            </RadioGroup>
+
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
@@ -115,7 +80,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/order_container"
+            app:layout_constraintTop_toBottomOf="@id/order_radio_group"
             tools:itemCount="5"
             tools:listitem="@layout/item_note_row" />
 
@@ -132,7 +97,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/order_container" />
+            app:layout_constraintTop_toBottomOf="@id/order_radio_group" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/add_fab"

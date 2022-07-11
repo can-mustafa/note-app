@@ -1,9 +1,7 @@
 package com.mustafacan.notes.presentation.view
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -34,6 +32,7 @@ class NotesFragment : Fragment(), OnItemClickListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
+        setHasOptionsMenu(true)
         _binding = FragmentNotesBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -54,6 +53,22 @@ class NotesFragment : Fragment(), OnItemClickListener {
         _binding = null
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.toolbar_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.toolbar_menu_note_sort -> {
+                with(binding.orderRadioGroup) {
+                    visibility = if (isVisible) View.GONE else View.VISIBLE
+                }
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
     override fun onItemClick(note: Note) {
         findNavController().navigate(
             NotesFragmentDirections.actionNoteListFragmentToNoteEditFragment(
@@ -71,12 +86,6 @@ class NotesFragment : Fragment(), OnItemClickListener {
     }
 
     private fun setListeners() {
-        binding.toggleSortView.setOnClickListener {
-            with(binding.orderRadioGroup) {
-                this.visibility = if (this.isVisible) View.GONE else View.VISIBLE
-            }
-        }
-
         binding.recyclerView.apply {
             addItemDecoration(
                 DividerItemDecoration(

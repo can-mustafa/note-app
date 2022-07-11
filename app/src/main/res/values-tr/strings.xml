@@ -19,4 +19,5 @@
     <string name="undo">Geri al</string>
     <string name="error_title_empty">Başlık boş olamaz.</string>
     <string name="error_content_empty">İçerik boş olamaz.</string>
+    <string name="sort_notes">Sırala</string>
 </resources>
