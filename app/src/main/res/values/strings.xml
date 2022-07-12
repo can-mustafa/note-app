@@ -19,4 +19,6 @@
     <string name="error_title_empty">Title can\'t be empty.</string>
     <string name="error_content_empty">Content can\'t be empty.</string>
     <string name="sort_notes">Sort</string>
+    <string name="note_saved_successfully">Note saved successfully.</string>
+    <string name="error">Error</string>
 </resources>

@@ -81,14 +81,16 @@ class NoteEditFragment : Fragment() {
                     Status.SUCCESS -> {
                         Toast.makeText(
                             requireContext(),
-                            "Note saved successfully.",
+                            getString(R.string.note_saved_successfully),
                             Toast.LENGTH_LONG
                         ).show()
                         findNavController().popBackStack()
                     }
                     Status.ERROR -> {
                         Toast.makeText(
-                            requireContext(), value.message ?: "Error", Toast.LENGTH_LONG
+                            requireContext(),
+                            value.message ?: getString(R.string.error),
+                            Toast.LENGTH_LONG
                         ).show()
                     }
                     Status.LOADING -> {}

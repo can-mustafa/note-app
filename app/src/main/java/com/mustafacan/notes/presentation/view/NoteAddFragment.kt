@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.mustafacan.notes.R
 import com.mustafacan.notes.databinding.FragmentNoteAddBinding
 import com.mustafacan.notes.domain.model.Note
 import com.mustafacan.notes.presentation.util.Status
@@ -65,14 +66,16 @@ class NoteAddFragment : Fragment() {
                     Status.SUCCESS -> {
                         Toast.makeText(
                             requireContext(),
-                            "Note saved successfully.",
+                            getString(R.string.note_saved_successfully),
                             Toast.LENGTH_LONG
                         ).show()
                         findNavController().popBackStack()
                     }
                     Status.ERROR -> {
                         Toast.makeText(
-                            requireContext(), value.message ?: "Error", Toast.LENGTH_LONG
+                            requireContext(),
+                            value.message ?: getString(R.string.error),
+                            Toast.LENGTH_LONG
                         ).show()
                     }
                     Status.LOADING -> {}
