@@ -11,6 +11,7 @@
     <string name="enter_note_title">Not başlığını giriniz</string>
     <string name="enter_note_content">Not içeriğini giriniz</string>
     <string name="save">Kaydet</string>
+    <string name="add">Ekle</string>
     <string name="empty_title">Boş başlık…</string>
     <string name="empty_content">Boş içerik…</string>
     <string name="last_update_date">Son güncelleme: %1$s</string>

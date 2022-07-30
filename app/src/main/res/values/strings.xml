@@ -10,6 +10,7 @@
     <string name="enter_note_title">Enter note title</string>
     <string name="enter_note_content">Enter note content</string>
     <string name="save">Save</string>
+    <string name="add">Add</string>
     <string name="empty_title">Empty title…</string>
     <string name="empty_content">Empty content…</string>
     <string name="last_update_date">Last update: %1$s</string>

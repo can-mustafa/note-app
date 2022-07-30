@@ -1,9 +1,7 @@
 package com.mustafacan.notes.presentation.view
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -29,6 +27,7 @@ class NoteAddFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        setHasOptionsMenu(true)
         _binding = FragmentNoteAddBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -37,8 +36,6 @@ class NoteAddFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = ViewModelProvider(requireActivity())[NotesViewModel::class.java]
-
-        setListeners()
         setObservers()
     }
 
@@ -47,15 +44,23 @@ class NoteAddFragment : Fragment() {
         _binding = null
     }
 
-    private fun setListeners() {
-        binding.noteAddButton.setOnClickListener {
-            viewModel.addNote(
-                Note(
-                    binding.noteAddTitle.text.toString(),
-                    binding.noteAddContent.text.toString(),
-                    System.currentTimeMillis()
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_note_add, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_note_add -> {
+                viewModel.addNote(
+                    Note(
+                        binding.noteAddTitle.text.toString(),
+                        binding.noteAddContent.text.toString(),
+                        System.currentTimeMillis()
+                    )
                 )
-            )
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 

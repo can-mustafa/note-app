@@ -18,4 +18,5 @@
     <color name="blue">#81A1C1</color>
     <color name="text_black">#44484C</color>
     <color name="text_gray">#676C71</color>
+    <color name="app_primary_blue">#255EA1</color>
 </resources>
