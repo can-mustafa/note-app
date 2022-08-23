@@ -36,9 +36,9 @@ class NotesViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 noteUseCases.addNote(note)
-                _addNoteSharedFlow.emit(Resource.success(note))
+                _addNoteSharedFlow.emit(Resource.Success(note))
             } catch (e: Exception) {
-                _addNoteSharedFlow.emit(Resource.error(e.message.toString(), null))
+                _addNoteSharedFlow.emit(Resource.Error(e.message.toString()))
             }
         }
     }

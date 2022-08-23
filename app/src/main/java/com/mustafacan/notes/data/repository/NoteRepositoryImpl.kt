@@ -1,7 +1,8 @@
-package com.mustafacan.notes.domain.repository
+package com.mustafacan.notes.data.repository
 
-import com.mustafacan.notes.data.NoteDao
+import com.mustafacan.notes.data.data_source.NoteDao
 import com.mustafacan.notes.domain.model.Note
+import com.mustafacan.notes.domain.repository.NoteRepository
 import kotlinx.coroutines.flow.Flow
 
 class NoteRepositoryImpl(

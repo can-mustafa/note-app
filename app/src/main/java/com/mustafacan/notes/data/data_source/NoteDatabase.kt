@@ -1,4 +1,4 @@
-package com.mustafacan.notes.data
+package com.mustafacan.notes.data.data_source
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

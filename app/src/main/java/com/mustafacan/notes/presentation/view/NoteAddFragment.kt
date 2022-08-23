@@ -10,7 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.mustafacan.notes.R
 import com.mustafacan.notes.databinding.FragmentNoteAddBinding
 import com.mustafacan.notes.domain.model.Note
-import com.mustafacan.notes.presentation.util.Status
+import com.mustafacan.notes.presentation.util.Resource
 import com.mustafacan.notes.presentation.viewmodel.NotesViewModel
 import kotlinx.coroutines.flow.collectIndexed
 import kotlinx.coroutines.launch
@@ -66,24 +66,24 @@ class NoteAddFragment : Fragment() {
 
     private fun setObservers() {
         lifecycleScope.launch {
-            viewModel.addNoteSharedFlow.collectIndexed { _, value ->
-                when (value.status) {
-                    Status.SUCCESS -> {
+            viewModel.addNoteSharedFlow.collectIndexed { _, result ->
+                when (result) {
+                    is Resource.Success -> {
                         Toast.makeText(
                             requireContext(),
                             getString(R.string.note_saved_successfully),
-                            Toast.LENGTH_LONG
+                            Toast.LENGTH_SHORT
                         ).show()
                         findNavController().popBackStack()
                     }
-                    Status.ERROR -> {
+                    is Resource.Error -> {
                         Toast.makeText(
                             requireContext(),
-                            value.message ?: getString(R.string.error),
-                            Toast.LENGTH_LONG
+                            result.message ?: getString(R.string.error),
+                            Toast.LENGTH_SHORT
                         ).show()
                     }
-                    Status.LOADING -> {}
+                    is Resource.Loading -> {}
                 }
             }
         }

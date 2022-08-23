@@ -1,4 +1,4 @@
-package com.mustafacan.notes.data
+package com.mustafacan.notes.data.data_source
 
 import androidx.room.*
 import com.mustafacan.notes.domain.model.Note

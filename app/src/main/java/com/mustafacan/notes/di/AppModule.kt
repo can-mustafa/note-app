@@ -2,10 +2,10 @@ package com.mustafacan.notes.di
 
 import android.app.Application
 import androidx.room.Room
-import com.mustafacan.notes.data.NoteDao
-import com.mustafacan.notes.data.NoteDatabase
+import com.mustafacan.notes.data.data_source.NoteDao
+import com.mustafacan.notes.data.data_source.NoteDatabase
+import com.mustafacan.notes.data.repository.NoteRepositoryImpl
 import com.mustafacan.notes.domain.repository.NoteRepository
-import com.mustafacan.notes.domain.repository.NoteRepositoryImpl
 import com.mustafacan.notes.domain.use_case.*
 import dagger.Module
 import dagger.Provides
