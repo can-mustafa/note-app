@@ -1,7 +1,9 @@
 package com.mustafacan.notes.presentation.view
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -33,7 +35,6 @@ class NoteEditFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        setHasOptionsMenu(true)
         _binding = FragmentNoteEditBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -49,6 +50,7 @@ class NoteEditFragment : Fragment() {
             viewModel.getNoteById(noteId)
         }
 
+        setListeners()
         setObservers()
     }
 
@@ -57,26 +59,18 @@ class NoteEditFragment : Fragment() {
         _binding = null
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_note_edit, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.menu_note_edit_save -> {
-                if (noteId != Util.INVALID_NOTE_ID) {
-                    viewModel.addNote(
-                        Note(
-                            binding.noteDetailTitle.text.toString(),
-                            binding.noteDetailContent.text.toString(),
-                            System.currentTimeMillis(),
-                            noteId
-                        )
+    private fun setListeners() {
+        binding.noteDetailSaveButton.setOnClickListener {
+            if (noteId != Util.INVALID_NOTE_ID) {
+                viewModel.addNote(
+                    Note(
+                        binding.noteDetailTitle.text.toString(),
+                        binding.noteDetailContent.text.toString(),
+                        System.currentTimeMillis(),
+                        noteId
                     )
-                }
-                true
+                )
             }
-            else -> super.onOptionsItemSelected(item)
         }
     }
 
