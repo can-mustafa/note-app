@@ -2,8 +2,11 @@ package com.mustafacan.notes.presentation.view
 
 import android.os.Bundle
 import android.view.*
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -26,13 +29,12 @@ class NotesFragment : Fragment(), OnItemClickListener {
     private var _binding: FragmentNotesBinding? = null
     private val binding get() = _binding!!
 
-    lateinit var viewModel: NotesViewModel
+    private lateinit var viewModel: NotesViewModel
     private lateinit var noteAdapter: NotesRecyclerViewAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        setHasOptionsMenu(true)
         _binding = FragmentNotesBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -41,6 +43,26 @@ class NotesFragment : Fragment(), OnItemClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = ViewModelProvider(requireActivity())[NotesViewModel::class.java]
+
+        val menuHost: MenuHost = requireActivity()
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.toolbar_menu, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when (menuItem.itemId) {
+                    R.id.toolbar_menu_note_sort -> {
+                        with(binding.orderRadioGroup) {
+                            visibility = if (isVisible) View.GONE else View.VISIBLE
+                        }
+                        true
+                    }
+                    else -> true
+                }
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+
         noteAdapter = NotesRecyclerViewAdapter(this)
         viewModel.getNotes()
 
@@ -51,22 +73,6 @@ class NotesFragment : Fragment(), OnItemClickListener {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.toolbar_menu, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.toolbar_menu_note_sort -> {
-                with(binding.orderRadioGroup) {
-                    visibility = if (isVisible) View.GONE else View.VISIBLE
-                }
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
     }
 
     override fun onItemClick(note: Note) {

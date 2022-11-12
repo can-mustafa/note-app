@@ -16,7 +16,7 @@ import com.mustafacan.notes.domain.model.Note
 import com.mustafacan.notes.presentation.util.Resource
 import com.mustafacan.notes.presentation.util.Util
 import com.mustafacan.notes.presentation.viewmodel.NotesViewModel
-import kotlinx.coroutines.flow.collectIndexed
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
@@ -76,7 +76,7 @@ class NoteEditFragment : Fragment() {
 
     private fun setObservers() {
         lifecycleScope.launch {
-            viewModel.addNoteSharedFlow.collectIndexed { _, result ->
+            viewModel.addNoteSharedFlow.collectLatest { result ->
                 when (result) {
                     is Resource.Success -> {
                         Toast.makeText(
