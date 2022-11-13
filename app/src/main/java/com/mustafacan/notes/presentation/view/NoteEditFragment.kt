@@ -27,7 +27,6 @@ class NoteEditFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var viewModel: NotesViewModel
-
     private val args: NoteEditFragmentArgs by navArgs()
     private var noteId: Int = -1
 
