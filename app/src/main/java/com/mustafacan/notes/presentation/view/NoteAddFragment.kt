@@ -8,11 +8,11 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import com.mustafacan.notes.R
 import com.mustafacan.notes.databinding.FragmentNoteAddBinding
 import com.mustafacan.notes.domain.model.Note
 import com.mustafacan.notes.presentation.util.Resource
+import com.mustafacan.notes.presentation.view.extensions.popBackStack
 import com.mustafacan.notes.presentation.viewmodel.NotesViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -69,8 +69,9 @@ class NoteAddFragment : Fragment() {
                             getString(R.string.note_saved_successfully),
                             Toast.LENGTH_SHORT
                         ).show()
-                        findNavController().popBackStack()
+                        popBackStack()
                     }
+
                     is Resource.Error -> {
                         Toast.makeText(
                             requireContext(),
@@ -78,6 +79,7 @@ class NoteAddFragment : Fragment() {
                             Toast.LENGTH_SHORT
                         ).show()
                     }
+
                     is Resource.Loading -> {}
                 }
             }

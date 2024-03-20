@@ -1,7 +1,12 @@
 package com.mustafacan.notes.presentation.view
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
@@ -9,7 +14,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -20,6 +24,7 @@ import com.mustafacan.notes.domain.util.NoteOrder
 import com.mustafacan.notes.domain.util.OrderType
 import com.mustafacan.notes.presentation.adapter.NotesRecyclerViewAdapter
 import com.mustafacan.notes.presentation.adapter.OnItemClickListener
+import com.mustafacan.notes.presentation.view.extensions.navigate
 import com.mustafacan.notes.presentation.viewmodel.NotesViewModel
 import kotlinx.coroutines.flow.collectIndexed
 import kotlinx.coroutines.launch
@@ -58,6 +63,7 @@ class NotesFragment : Fragment(), OnItemClickListener {
                         }
                         true
                     }
+
                     else -> true
                 }
             }
@@ -76,10 +82,8 @@ class NotesFragment : Fragment(), OnItemClickListener {
     }
 
     override fun onItemClick(note: Note) {
-        findNavController().navigate(
-            NotesFragmentDirections.actionNoteListFragmentToNoteEditFragment(
-                note.id ?: -1
-            )
+        navigate(
+            NotesFragmentDirections.actionNoteListFragmentToNoteEditFragment(note.id ?: -1)
         )
     }
 
@@ -108,7 +112,7 @@ class NotesFragment : Fragment(), OnItemClickListener {
         }
 
         binding.addFab.setOnClickListener {
-            findNavController().navigate(NotesFragmentDirections.actionNoteListFragmentToNoteAddFragment())
+            navigate(NotesFragmentDirections.actionNoteListFragmentToNoteAddFragment())
         }
 
         binding.orderByTitle.setOnClickListener {
@@ -145,7 +149,7 @@ class NotesFragment : Fragment(), OnItemClickListener {
         lifecycleScope.launch {
             viewModel.getNotesSharedFlow.collectIndexed { _, value ->
                 _binding?.isEmptyList = value.isEmpty()
-                noteAdapter.notes = value
+                noteAdapter.submitList(value)
             }
         }
     }
