@@ -2,22 +2,18 @@ package com.mustafacan.notes.presentation.adapter
 
 import android.graphics.Color
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.mustafacan.notes.R
+import com.mustafacan.notes.databinding.ItemNoteRowBinding
 import com.mustafacan.notes.domain.model.Note
+import com.mustafacan.notes.presentation.view.extensions.setOnSafeClickListener
 
 class NotesRecyclerViewAdapter(private val listener: OnItemClickListener) :
     ListAdapter<Note, NotesRecyclerViewAdapter.NoteViewHolder>(
         DIFF_CALLBACK
     ) {
-
-    inner class NoteViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
     private val colors: Array<String> = arrayOf(
         "#8FBCBB", "#A3BE8C", "#7AC3A1", "#B48EAD", "#81A1C1", "#8BD184", "#CC927C"
@@ -28,35 +24,40 @@ class NotesRecyclerViewAdapter(private val listener: OnItemClickListener) :
         set(value) = submitList(value)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
-        val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_note_row, parent, false)
-        return NoteViewHolder(view)
+        val binding = ItemNoteRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return NoteViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
-        val titleTextView = holder.itemView.findViewById<TextView>(R.id.note_title)
-        val contentTextView = holder.itemView.findViewById<TextView>(R.id.note_content)
-        val noteDeleteImageView = holder.itemView.findViewById<ImageView>(R.id.note_delete)
+        holder.bind(getItem(position))
+    }
 
-        val note = notes[position]
+    inner class NoteViewHolder(private val binding: ItemNoteRowBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-        holder.itemView.apply {
-            setBackgroundColor(Color.parseColor(colors[position % colors.size]))
-            setOnClickListener { listener.onItemClick(note) }
-            titleTextView.text = note.title
-            contentTextView.text = note.content
-            noteDeleteImageView.setOnClickListener { listener.onRemoveClick(note) }
+        fun bind(item: Note) {
+            binding.run {
+                root.setBackgroundColor(Color.parseColor(colors[adapterPosition % colors.size]))
+                root.setOnSafeClickListener {
+                    listener.onItemClick(item)
+                }
+                noteTitle.text = item.title
+                noteContent.text = item.content
+                noteDelete.setOnSafeClickListener {
+                    listener.onRemoveClick(item)
+                }
+            }
         }
     }
 
     companion object {
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Note>() {
             override fun areItemsTheSame(oldItem: Note, newItem: Note): Boolean {
-                return oldItem == newItem
+                return oldItem.id == newItem.id
             }
 
             override fun areContentsTheSame(oldItem: Note, newItem: Note): Boolean {
-                return oldItem.id == newItem.id
+                return oldItem == newItem
             }
         }
     }
