@@ -8,15 +8,14 @@ plugins {
 
 android {
     namespace 'com.mustafacan.notes'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.mustafacan.notes"
         minSdk 26
-        targetSdk 33
-        versionCode 3
-        versionName "1.2"
-
+        targetSdk 34
+        versionCode 4
+        versionName "1.4"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -26,16 +25,25 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
     buildFeatures {
         viewBinding true
         dataBinding true
+    }
+
+    bundle {
+        language {
+            enableSplit = false
+        }
     }
 }
 
