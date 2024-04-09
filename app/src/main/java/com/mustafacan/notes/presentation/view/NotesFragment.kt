@@ -11,9 +11,10 @@ import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -26,16 +27,18 @@ import com.mustafacan.notes.presentation.adapter.NotesRecyclerViewAdapter
 import com.mustafacan.notes.presentation.adapter.OnItemClickListener
 import com.mustafacan.notes.presentation.view.extensions.navigate
 import com.mustafacan.notes.presentation.viewmodel.NotesViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectIndexed
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class NotesFragment : Fragment(), OnItemClickListener {
 
     private var _binding: FragmentNotesBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewModel: NotesViewModel
-    private lateinit var noteAdapter: NotesRecyclerViewAdapter
+    private val viewModel: NotesViewModel by viewModels()
+    private val noteAdapter by lazy { NotesRecyclerViewAdapter(this) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -46,8 +49,6 @@ class NotesFragment : Fragment(), OnItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        viewModel = ViewModelProvider(requireActivity())[NotesViewModel::class.java]
 
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(object : MenuProvider {
@@ -69,7 +70,6 @@ class NotesFragment : Fragment(), OnItemClickListener {
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
-        noteAdapter = NotesRecyclerViewAdapter(this)
         viewModel.getNotes()
 
         setListeners()
@@ -147,9 +147,11 @@ class NotesFragment : Fragment(), OnItemClickListener {
 
     private fun setObservers() {
         lifecycleScope.launch {
-            viewModel.getNotesSharedFlow.collectIndexed { _, value ->
-                _binding?.isEmptyList = value.isEmpty()
-                noteAdapter.submitList(value)
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.getNotesSharedFlow.collectIndexed { _, value ->
+                    _binding?.isEmptyList = value.isEmpty()
+                    noteAdapter.submitList(value)
+                }
             }
         }
     }

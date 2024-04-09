@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.mustafacan.notes.R
 import com.mustafacan.notes.databinding.FragmentNoteAddBinding
@@ -14,15 +14,17 @@ import com.mustafacan.notes.domain.model.Note
 import com.mustafacan.notes.presentation.util.Resource
 import com.mustafacan.notes.presentation.view.extensions.popBackStack
 import com.mustafacan.notes.presentation.viewmodel.NotesViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class NoteAddFragment : Fragment() {
 
     private var _binding: FragmentNoteAddBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewModel: NotesViewModel
+    private val viewModel: NotesViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,8 +37,6 @@ class NoteAddFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        viewModel = ViewModelProvider(requireActivity())[NotesViewModel::class.java]
 
         setListeners()
         setObservers()
